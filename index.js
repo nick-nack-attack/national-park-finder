@@ -16,18 +16,19 @@ function getAddress(index) {
     const latlongString = `latlng=${latLongArray[0].replace("lat:", "")},${latLongArray[1].replace("long:", "")}`;
     const fullUrlString = `https://maps.googleapis.com/maps/api/geocode/json?${latlongString}&key=${googleApiKey}`;
     console.log(`Here is fullUrlString: [${fullUrlString}]`)
-    const address = "";
+    let address = "";
 
     return fetch(fullUrlString)
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } throw new Error(response.statusText)
-    })
-    .then(googleMapsJson => address = getformattedAddress(googleMapsJson))
-    .catch(error => {
-        $('#js-error-message').text(`Something went so wrong: ${error.message}`)
-    });
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText)
+        })
+        .then(googleMapsJson => address = getformattedAddress(googleMapsJson))
+        .catch(error => {
+            $('#js-error-message').text(`Something went so wrong: ${error.message}`)
+        });
 
 }
 
@@ -36,7 +37,7 @@ function displayResults(responseJson) {
     $('#js-number-of-results').empty();
     console.log(responseJson)
     $('#js-number-of-results').append(`${responseJson.data.length}`);
-    for (let i=0; i<responseJson.data.length; i++) {
+    for (let i = 0; i < responseJson.data.length; i++) {
         $('#js-results-list').append(`
         <li>
         <h3>${responseJson.data[i].fullName}</h3>
@@ -45,8 +46,9 @@ function displayResults(responseJson) {
         <p>${responseJson.data[i].description}</p>
         <a href="${responseJson.data[i].url}">Learn more</a>
         </li>
-        `)};
-        $('#results').removeClass('hidden');
+        `)
+    };
+    $('#results').removeClass('hidden');
 }
 
 function formatQueryParams(params) {
@@ -64,15 +66,16 @@ function getParks(query, maxResults) {
     const url = urlBase + "?" + queryString;
     //
     fetch(url)
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } throw new Error(response.statusText);
-    })
-    .then(responseJson => displayResults(responseJson))
-    .catch(error => {
-        $('#js-error-message').text(`Something went wrong: ${error.message}`);
-    });
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error(response.statusText);
+        })
+        .then(responseJson => displayResults(responseJson))
+        .catch(error => {
+            $('#js-error-message').text(`Something went wrong: ${error.message}`);
+        });
 }
 
 function watchForm() {
