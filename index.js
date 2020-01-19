@@ -33,20 +33,28 @@ function getAddress(index) {
 }
 
 function displayResults(responseJson) {
+
     $('#js-results-list').empty();
     $('#js-number-of-results').empty();
+
     console.log(responseJson)
+
     $('#js-number-of-results').append(`${responseJson.data.length}`);
+
     for (let i = 0; i < responseJson.data.length; i++) {
-        $('#js-results-list').append(`
-        <li>
-        <h3>${responseJson.data[i].fullName}</h3>
-        <p class="js-location">${responseJson.data[i].states}</p>
-        <p class="js-address">${getAddress(responseJson.data[i].latLong)}</p>
-        <p>${responseJson.data[i].description}</p>
-        <a href="${responseJson.data[i].url}">Learn more</a>
-        </li>
-        `)
+
+        let parkAddress;
+        getAddress(responseJson.data[i].latLong).then(address => {
+            $('#js-results-list').append(`
+            <li>
+            <h3>${responseJson.data[i].fullName}</h3>
+            <p class="js-location">${responseJson.data[i].states}</p>
+            <p class="js-address">${address}</p>
+            <p>${responseJson.data[i].description}</p>
+            <a href="${responseJson.data[i].url}">Learn more</a>
+            </li>
+            `)
+        })
     };
     $('#results').removeClass('hidden');
 }
