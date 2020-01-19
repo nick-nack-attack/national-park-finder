@@ -5,17 +5,17 @@ const urlBase = 'https://developer.nps.gov/api/v1/parks';
 
 // https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
 
-function getformattedAddress(googleMapsJson) {
-    console.log(JSON.stringify(googleMapsJson.results[0].formatted_address));
+function returnFinalAddress(googleMapsJson) {
+    return JSON.stringify(googleMapsJson)
 }
 
 function getAddress(index) {
+    console.log(`getAddress() is running...`)
     const googleApiKey = 'AIzaSyCK82Be_pTbvfiHQEo1H9hbSJpwDG0LPJE';
     const latLongArray = index.split(',');
-    console.log(`index is: ${latLongArray} and lat: ${latLongArray[0].replace("lat:", "")} and here is long: ${latLongArray[1].replace("long:", "")}`)
     const latlongString = `latlng=${latLongArray[0].replace("lat:", "")},${latLongArray[1].replace("long:", "")}`;
     const fullUrlString = `https://maps.googleapis.com/maps/api/geocode/json?${latlongString}&key=${googleApiKey}`;
-    console.log(`Here is fullUrlString: [${fullUrlString}]`)
+    // console.log(`Here is fullUrlString: [${fullUrlString}]`)
     let address = "";
 
     return fetch(fullUrlString)
@@ -25,7 +25,7 @@ function getAddress(index) {
             }
             throw new Error(response.statusText)
         })
-        .then(googleMapsJson => address = getformattedAddress(googleMapsJson))
+        .then(googleMapsJson => returnFinalAddress(googleMapsJson))
         .catch(error => {
             $('#js-error-message').text(`Something went so wrong: ${error.message}`)
         });
@@ -37,13 +37,12 @@ function displayResults(responseJson) {
     $('#js-results-list').empty();
     $('#js-number-of-results').empty();
 
-    console.log(responseJson)
+    console.log(`displayResults() is running...`)
 
     $('#js-number-of-results').append(`${responseJson.data.length}`);
 
     for (let i = 0; i < responseJson.data.length; i++) {
 
-        let parkAddress;
         getAddress(responseJson.data[i].latLong).then(address => {
             $('#js-results-list').append(`
             <li>
