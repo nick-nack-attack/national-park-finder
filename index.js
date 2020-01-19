@@ -5,10 +5,6 @@ const urlBase = 'https://developer.nps.gov/api/v1/parks';
 
 // https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
 
-function returnFinalAddress(googleMapsJson) {
-    return JSON.stringify(googleMapsJson)
-}
-
 function getAddress(index) {
     console.log(`getAddress() is running...`)
     const googleApiKey = 'AIzaSyCK82Be_pTbvfiHQEo1H9hbSJpwDG0LPJE';
@@ -25,7 +21,7 @@ function getAddress(index) {
             }
             throw new Error(response.statusText)
         })
-        .then(googleMapsJson => returnFinalAddress(googleMapsJson))
+        .then(googleMapsJson => JSON.stringify(googleMapsJson.results[0].formatted_address))
         .catch(error => {
             $('#js-error-message').text(`Something went so wrong: ${error.message}`)
         });
