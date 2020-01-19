@@ -1,0 +1,76 @@
+* {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+-moz-box-sizing: border-box;
+-ms-box-sizing: border-box;
+box-sizing: border-box
+}
+
+/* ELEMENTS */
+
+body {
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
+h2 {
+    font-size: 16px;
+}
+
+li {
+    list-style: none;
+    text-align: left;
+    padding: 30px;
+    border: 2px rgb(212, 212, 212) solid;
+    margin-bottom: 20px;
+}
+
+ul {
+    padding-right: 40px;
+    margin-right: auto;
+}
+
+input[type="submit"] {
+    border: 3px royalblue solid;
+    color: royalblue;
+    font-weight: bolder;
+    height: 35px;
+    width: 100px;
+}
+
+input[type="text"], input[type="number"] {
+    height: 35px;
+    background-color: rgb(248, 248, 248);
+    border: 1px solid grey;
+    font-size: 12px;
+    padding: 5px;
+}
+
+input[type="number"] {
+    width: 50px;
+}
+
+/* ID */
+
+#js-error-message {
+    color: red;
+}
+
+#js-search-term {
+    margin-bottom: 10px;
+}
+
+/* CLASSES */
+
+.hidden {
+    display: none;
+}
+
+.js-location {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.js-address {
+    font-style: italic;
+}
