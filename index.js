@@ -59,14 +59,18 @@ function formatQueryParams(params) {
     return queryItems.join('&')
 }
 
-function getParks(query, maxResults) {
+function getParks(query, state, maxResults) {
     const params = {
         q: query,
         limit: maxResults,
+        stateCode: state,
         api_key: apiKey
     };
+    //
     const queryString = formatQueryParams(params);
     const url = urlBase + "?" + queryString;
+    //
+    console.log(url);
     //
     fetch(url)
         .then(response => {
@@ -86,7 +90,9 @@ function watchForm() {
         event.preventDefault();
         const submittedParkName = $('#js-search-term').val();
         const submittedMaxResults = $('#js-max-results').val();
-        getParks(submittedParkName, submittedMaxResults);
+        const submittedState = $('#state-select').val();
+        console.log(submittedState);
+        getParks(submittedParkName, submittedState, submittedMaxResults);
     })
 }
 
