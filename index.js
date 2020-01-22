@@ -41,13 +41,13 @@ function displayResults(responseJson) {
 
         getAddress(responseJson.data[i].latLong).then(address => {
             $('#js-results-list').append(`
-            <li>
-            <h3>${responseJson.data[i].fullName}</h3>
-            <p class="js-location">${responseJson.data[i].states}</p>
-            <p class="js-address">${address}</p>
-            <p>${responseJson.data[i].description}</p>
-            <a href="${responseJson.data[i].url}">Learn more</a>
-            </li>
+                <li>
+                    <h3>${responseJson.data[i].fullName}</h3>
+                    <p class="js-location">${responseJson.data[i].states}</p>
+                    <p class="js-address">${address}</p>
+                    <p>${responseJson.data[i].description}</p>
+                    <a href="${responseJson.data[i].url}">Learn more</a>
+                </li>
             `)
         })
     };
@@ -90,8 +90,4 @@ function watchForm() {
     })
 }
 
-function runPage() {
-    watchForm();
-}
-
-runPage();
+watchForm();
