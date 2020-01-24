@@ -39,31 +39,29 @@ function displayResults(responseJson) {
 
     for (let i = 0; i < responseJson.data.length; i++) {
 
-        getAddress(responseJson.data[i].latLong).then(address => {
-            $('#js-results-list').append(`
+        $('#js-results-list').append(`
                 <li>
                     <h3>${responseJson.data[i].fullName}</h3>
                     <p class="js-location">${responseJson.data[i].states}</p>
-                    <p class="js-address">${address}</p>
                     <p>${responseJson.data[i].description}</p>
                     <a href="${responseJson.data[i].url}">Learn more</a>
                 </li>
             `)
-        })
-    };
+        }
+    
     $('#results').removeClass('hidden');
 }
 
 function formatQueryParams(params) {
     const queryItems = Object.keys(params).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`);
+    console.log(`formatQueryParams: ${queryItems}`)
     return queryItems.join('&')
 }
 
-function getParks(query, state, maxResults) {
+function getParks(submittedStates, submittedMaxResults) {
     const params = {
-        q: query,
-        limit: maxResults,
-        stateCode: state,
+        stateCode: submittedStates,
+        limit: submittedMaxResults,
         api_key: apiKey
     };
     //
@@ -88,11 +86,9 @@ function getParks(query, state, maxResults) {
 function watchForm() {
     $('form').submit(event => {
         event.preventDefault();
-        const submittedParkName = $('#js-search-term').val();
+        const submittedStates = $('#js-search-term').val();
         const submittedMaxResults = $('#js-max-results').val();
-        const submittedState = $('#state-select').val();
-        console.log(submittedState);
-        getParks(submittedParkName, submittedState, submittedMaxResults);
+        getParks(submittedStates, submittedMaxResults);
     })
 }
 
